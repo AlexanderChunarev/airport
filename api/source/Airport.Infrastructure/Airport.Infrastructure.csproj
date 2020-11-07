@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Airport.Domain\Airport.Domain.csproj" />
+     <ProjectReference Include="..\Airport.Application\Airport.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper.Extensions.NetCore" Version="3.2.0" />
+    <PackageReference Include="FluentMigrator" Version="3.2.9" />
+    <PackageReference Include="Npgsql" Version="4.1.5" />
+  </ItemGroup>
+
+</Project>
