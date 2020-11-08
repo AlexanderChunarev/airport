@@ -7,9 +7,14 @@ namespace Airport.Application.UseCases.Airline
 
     public class AddAirlineUseCase : IAddAirlineUseCase
     {
-        private readonly IAccountRepository _airlineRepository;
+        private readonly IAirlineRepository _airlineRepository;
         private readonly IOutputPort _outputHandler;
 
+        public AddAirlineUseCase(IAirlineRepository airlineRepository, IOutputPort outputHandler)
+        {
+            _airlineRepository = airlineRepository;
+            _outputHandler = outputHandler;
+        }
 
         public async Task Execute(AirlineInput airlineInput)
         {

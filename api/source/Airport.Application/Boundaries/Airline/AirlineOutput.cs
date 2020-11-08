@@ -1,12 +1,13 @@
 namespace Airport.Application.Boundaries.Airline
 {
+    using Airport.Domain.Airline;
     public sealed class AirlineOutput
     {
-        private Domain.Airline.Airline airline;
+        public Airline Airline { get; set; }
 
-        public AirlineOutput(Domain.Airline.Airline airline)
+        public AirlineOutput(Airline airline)
         {
-            this.airline = airline;
+            Airline = airline;
         }
     }
 }
