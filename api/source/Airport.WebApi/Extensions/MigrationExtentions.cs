@@ -1,13 +1,10 @@
-using System.Data;
-
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Airport.Infrastructure.DapperDataAccess.Migrations;
 using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Builder;
-using Airport.Infrastructure.DapperDataAccess.Migrations;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-
-namespace Airport.WebApi.Extentions
+namespace Airport.WebApi.Extensions
 {
     public static class MigrationExtension
     {

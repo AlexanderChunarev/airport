@@ -25,17 +25,14 @@ namespace Airport.Infrastructure.DapperDataAccess.Repositories
                 "INSERT INTO airlines (name, description) VALUES (@Name, @Description) RETURNING id";
             const string insertPlaneQuery =
                 "INSERT INTO planes (airlineid, name, description) VALUES (@AirlineId, @Name, @Description)";
-            using (var transaction = new TransactionScope())
+            using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var id = _dbConnection.QueryFirstAsync<int>(insertAirlineQuery, airline);
-                await Task.WhenAll(id).ContinueWith(res =>
+                var id = _dbConnection.QueryFirstAsync<int>(insertAirlineQuery, airline).Result;
+                foreach (var plane in airline.Planes)
                 {
-                    foreach (var plane in airline.Planes)
-                    {
-                        plane.AirlineId = res.Result[0];
-                        _dbConnection.Execute(insertPlaneQuery, plane);
-                    }
-                });
+                    plane.AirlineId = id;
+                    await _dbConnection.ExecuteAsync(insertPlaneQuery, plane);
+                }
                 transaction.Complete();
             }
         }
