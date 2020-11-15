@@ -1,8 +1,9 @@
+using System.Threading.Tasks;
+using Airport.Application.Boundaries.Airline;
+using Airport.Application.Repositories;
+
 namespace Airport.Application.UseCases.Airline
 {
-    using System.Threading.Tasks;
-    using Airport.Application.Boundaries.Airline;
-    using Airport.Application.Repositories;
     using Airport.Domain.Airline;
 
     public class AddAirlineUseCase : IAddAirlineUseCase
@@ -23,7 +24,9 @@ namespace Airport.Application.UseCases.Airline
                 _outputHandler.Error("Input is null.");
                 return;
             }
-            var airline = new Airline() {
+
+            var airline = new Airline()
+            {
                 Name = airlineInput.Airline.Name,
                 Description = airlineInput.Airline.Description,
                 Planes = airlineInput.Airline.Planes
@@ -32,6 +35,5 @@ namespace Airport.Application.UseCases.Airline
             var airlineOutput = new AirlineOutput(airline);
             _outputHandler.Standard(airlineOutput);
         }
-
     }
 }
