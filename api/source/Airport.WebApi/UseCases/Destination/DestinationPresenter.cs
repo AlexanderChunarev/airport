@@ -15,7 +15,7 @@ namespace Airport.WebApi.UseCases.Destination
 
         public void Standard(DestinationOutput output)
         {
-            ViewModel = new JsonResult(output.Destination);
+            ViewModel = new JsonResult(output.Destinations);
         }
     }
 }

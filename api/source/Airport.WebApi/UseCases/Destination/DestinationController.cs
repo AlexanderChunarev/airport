@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Airport.Application.Boundaries.Destination;
 using Airport.Application.UseCases.Destination;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,9 @@ namespace Airport.WebApi.UseCases.Destination
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddDestination([FromBody] Destination destination)
+        public async Task<IActionResult> AddDestination([FromBody] List<Destination> destinations)
         {
-            var destinationInput = new DestinationInput(destination);
+            var destinationInput = new DestinationInput(destinations);
             await _addDestinationUseCase.Execute(destinationInput);
             return _destinationPresenter.ViewModel;
         }

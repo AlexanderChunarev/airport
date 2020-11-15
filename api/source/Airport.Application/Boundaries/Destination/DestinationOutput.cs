@@ -1,14 +1,16 @@
-﻿namespace Airport.Application.Boundaries.Destination
+﻿using System.Collections.Generic;
+
+namespace Airport.Application.Boundaries.Destination
 {
     using Airport.Domain.Destination;
 
     public sealed class DestinationOutput
     {
-        public Destination Destination { get; set; }
+        public List<Destination> Destinations { get; set; }
 
-        public DestinationOutput(Destination destination)
+        public DestinationOutput(List<Destination> destinations)
         {
-            Destination = destination;
+            Destinations = destinations;
         }
     }
 }

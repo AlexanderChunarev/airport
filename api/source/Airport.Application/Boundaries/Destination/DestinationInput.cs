@@ -1,14 +1,16 @@
-﻿namespace Airport.Application.Boundaries.Destination
+﻿using System.Collections.Generic;
+
+namespace Airport.Application.Boundaries.Destination
 {
     using Airport.Domain.Destination;
 
     public class DestinationInput
     {
-        public Destination Destination { get; set; }
+        public List<Destination> Destinations { get; set; }
 
-        public DestinationInput(Destination destination)
+        public DestinationInput(List<Destination> destinations)
         {
-            Destination = destination;
+            Destinations = destinations;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Airport.Application.Boundaries.Destination;
 using Airport.Application.Repositories;
 
@@ -25,13 +26,15 @@ namespace Airport.Application.UseCases.Destination
                 return;
             }
 
-            var destination = new Destination()
-            {
-                AirlineId = input.Destination.AirlineId,
-                Country = input.Destination.Country
-            };
-            await _destinationRepository.Add(destination);
-            var airlineOutput = new DestinationOutput(destination);
+            var destinations = input.Destinations.Select(d =>
+                new Destination()
+                {
+                    AirlineId = d.AirlineId,
+                    Country = d.Country
+                }).ToList();
+
+            await _destinationRepository.Add(destinations);
+            var airlineOutput = new DestinationOutput(destinations);
             _outputHandler.Standard(airlineOutput);
         }
     }
