@@ -2,6 +2,8 @@ using System.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using Airport.Application.Repositories;
+using Airport.Infrastructure.DapperDataAccess.Repositories;
 
 namespace Airport.WebApi.Extentions
 {
@@ -13,7 +15,7 @@ namespace Airport.WebApi.Extentions
                 options => new NpgsqlConnection(configuration.GetConnectionString("DefaultConnection")));
         
             // Add repositories below
-            // services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IAirlineRepository, AirlineRepository>();
             return services;
         }
     }

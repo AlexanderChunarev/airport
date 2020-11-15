@@ -1,4 +1,4 @@
-namespace Airport.Application.Boundaries.Login
+namespace Airport.Application.Boundaries
 {
     public interface IErrorHandler
     {
