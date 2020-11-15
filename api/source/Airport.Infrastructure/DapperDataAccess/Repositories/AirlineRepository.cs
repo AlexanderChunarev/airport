@@ -1,3 +1,7 @@
+using System;
+using System.Threading;
+using System.Transactions;
+
 namespace Airport.Infrastructure.DapperDataAccess.Repositories
 {
     using System.Data;
@@ -8,17 +12,32 @@ namespace Airport.Infrastructure.DapperDataAccess.Repositories
 
     public class AirlineRepository : IAirlineRepository
     {
-        private IDbConnection _dbConnection;
+        private readonly IDbConnection _dbConnection;
 
         public AirlineRepository(IDbConnection dbConnection)
         {
             _dbConnection = dbConnection;
         }
 
-        public Task Add(Airline airline)
+        public async Task Add(Airline airline)
         {
-            string query = "INSERT INTO airlines (name, description) VALUES (@Name, @Description) RETURNING *";
-            return _dbConnection.QueryFirstAsync(query, airline);
+            const string insertAirlineQuery =
+                "INSERT INTO airlines (name, description) VALUES (@Name, @Description) RETURNING id";
+            const string insertPlaneQuery =
+                "INSERT INTO planes (airlineid, name, description) VALUES (@AirlineId, @Name, @Description)";
+            using (var transaction = new TransactionScope())
+            {
+                var id = _dbConnection.QueryFirstAsync<int>(insertAirlineQuery, airline);
+                await Task.WhenAll(id).ContinueWith(res =>
+                {
+                    foreach (var plane in airline.Planes)
+                    {
+                        plane.AirlineId = res.Result[0];
+                        _dbConnection.Execute(insertPlaneQuery, plane);
+                    }
+                });
+                transaction.Complete();
+            }
         }
 
         public Task Delete(Airline airline)
