@@ -25,11 +25,11 @@ namespace Airport.Application.UseCases.Airline
             }
             var airline = new Airline() {
                 Name = airlineInput.Airline.Name,
-                Description = airlineInput.Airline.Description
+                Description = airlineInput.Airline.Description,
+                Planes = airlineInput.Airline.Planes
             };
-
-            AirlineOutput airlineOutput = new AirlineOutput(airline);
             await _airlineRepository.Add(airline);
+            var airlineOutput = new AirlineOutput(airline);
             _outputHandler.Standard(airlineOutput);
         }
 
